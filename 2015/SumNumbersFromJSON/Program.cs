@@ -10,7 +10,7 @@ namespace SumNumbersFromJSON
     {
         static void Main(string[] args)
         {
-            var input = File.ReadAllText(@"D:\Projects\AdventOfCode\2015\Exercises\AccountingSoftware\Input.txt");
+            var input = File.ReadAllText(@"D:\Projects\AdventOfCode\2015\SumNumbersFromJSON\Input.txt");
             var accounting = new SumNumbers();
             JObject o = JObject.Parse(input);
             var sum = accounting.AddAllNumbers(o);
@@ -56,11 +56,10 @@ namespace SumNumbersFromJSON
         {
             int[] sum = new int[1];
 
-            foreach (var token in current)
+            foreach (var token in current.Values())
             {
-                var doesContainRed = token.Value.Children().Values().Any(a => a.ToString().Equals("red") && a.Parent.Type != JTokenType.Array);
-                if (!doesContainRed)
-                    TraverseThroughJson(token.Value, sum);
+                if (!CheckIfContainsRedString(token))
+                    TraverseThroughJson(token, sum);
                 else
                     break;
             }
@@ -72,6 +71,7 @@ namespace SumNumbersFromJSON
 
         private void TraverseThroughJson(JToken current, int[] sum)
         {
+            //If we the current contains only one element
             if (!current.Children().Any())
             {
                 if (int.TryParse(current.ToString(), out int number))
@@ -81,15 +81,19 @@ namespace SumNumbersFromJSON
 
             foreach (var token in current.Children())
             {
-                var doesContainRed = token.Children().Values().Any(a => a.ToString().Equals("red") && a.Parent.Type != JTokenType.Array);
-
-                if (!doesContainRed)
+                if (!CheckIfContainsRedString(token))
                 {
                     TraverseThroughJson(token, sum);
                 }
 
 
             }
+        }
+
+        private bool CheckIfContainsRedString(JToken token)
+        {
+            //If it contains children of value red and it the current value is not in array
+            return token.Children().Values().Any(a => a.ToString().Equals("red") && a.Parent.Type != JTokenType.Array);
         }
     }
 }

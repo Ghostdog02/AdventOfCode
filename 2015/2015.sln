@@ -23,7 +23,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LookAndSay", "LookAndSay\Lo
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FindNextPasswordForSanta", "FindNextPasswordForSanta\FindNextPasswordForSanta.csproj", "{35209A77-26E3-4021-8500-47CBD8FA7B75}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SumNumbersFromJSON", "AccountingSoftware\SumNumbersFromJSON.csproj", "{D8EA163E-5213-4429-A317-C1BC6E980D7E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SumNumbersFromJSON", "SumNumbersFromJSON\SumNumbersFromJSON.csproj", "{0E09DDD5-7406-4188-8E7F-78C113C151A9}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -71,10 +71,10 @@ Global
 		{35209A77-26E3-4021-8500-47CBD8FA7B75}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{35209A77-26E3-4021-8500-47CBD8FA7B75}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{35209A77-26E3-4021-8500-47CBD8FA7B75}.Release|Any CPU.Build.0 = Release|Any CPU
-		{D8EA163E-5213-4429-A317-C1BC6E980D7E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{D8EA163E-5213-4429-A317-C1BC6E980D7E}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{D8EA163E-5213-4429-A317-C1BC6E980D7E}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{D8EA163E-5213-4429-A317-C1BC6E980D7E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0E09DDD5-7406-4188-8E7F-78C113C151A9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0E09DDD5-7406-4188-8E7F-78C113C151A9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0E09DDD5-7406-4188-8E7F-78C113C151A9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0E09DDD5-7406-4188-8E7F-78C113C151A9}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
