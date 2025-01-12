@@ -73,7 +73,7 @@ namespace OptimalSeatingArrangement
 
         public void FindOptimalSeatingArrangement()
         {
-            GenerateAllPermutationsOfNames(Names.Count - 1);
+            GenerateAllPermutationsOfNames(Names.Count);
         }
 
         private void GenerateAllPermutationsOfNames(int currentIndex)
@@ -81,6 +81,11 @@ namespace OptimalSeatingArrangement
             if (currentIndex == 1)
             {
                 CalculateTotalHappiness();
+                //foreach (var name in Names)
+                //{
+                //    Console.Write($"{name} ");
+                //}
+                //Console.WriteLine();
                 return;
             }
 
@@ -90,14 +95,14 @@ namespace OptimalSeatingArrangement
 
                 for (int i = currentIndex; i >= 0; i--)
                 {
-                    if (i % 2 == 0)
+                    if (currentIndex % 2 == 0)
                     {
-                        Swap(i, currentIndex);
+                        Swap(i, currentIndex - 1);
                     }
 
                     else
                     {
-                        Swap(0, currentIndex);
+                        Swap(0, currentIndex - 1);
 
                     }
 
