@@ -73,44 +73,37 @@
         //Second Part
         public void FindFurthestDistancePartTwo()
         {
-            var currentFurthestDistance = 0;
-            var counter = 0;
-
-            for (int seconds = 1; seconds <= 1000; seconds++)
+            for (int seconds = 1; seconds <= 2503; seconds++)
             {
+                var currentFurthestDistance = 0;
+
                 foreach (var reindeer in Reindeers)
                 {
-                    if (seconds == 140)
+                    if (!reindeer.IsResting)
                     {
-                        int b = 0;
-                    }
+                        reindeer.Distance += reindeer.KilometersPerSecond;
+                        reindeer.MovingTimeLeft--;
 
-                    if (seconds % reindeer.StartMovingOn == 0)
-                    {
-                        reindeer.IsResting = false;
-                        counter++;
-                    }
-                    //else if (seconds % (reindeer.MovingTime + 1) == 0)
-                    //    reindeer.IsResting = true;
-
-                    if (reindeer.IsResting == false)
-                    {
+                        // Check if we need to transition to resting
                         if (reindeer.MovingTimeLeft == 0)
                         {
                             reindeer.IsResting = true;
                             reindeer.MovingTimeLeft = reindeer.MovingTime;
                         }
-
-
-                        else
-                            reindeer.MovingTimeLeft--;
                     }
 
-                    //if (i == reindeer.MovingTime + 1)
-                    //    reindeer.IsResting = true;
+                    else
+                    {
+                        reindeer.RestTimeLeft--;
 
-                    if (!reindeer.IsResting)
-                        reindeer.Distance += reindeer.KilometersPerSecond;
+                        // Check if we need to transition to moving
+                        if (reindeer.RestTimeLeft == 0)
+                        {
+                            reindeer.IsResting = false;
+                            reindeer.RestTimeLeft = reindeer.RestTime;
+                        }
+
+                    }
 
                     if (reindeer.Distance > currentFurthestDistance)
                         currentFurthestDistance = reindeer.Distance;
@@ -119,12 +112,15 @@
                 foreach (var reindeer in Reindeers)
                 {
                     if (reindeer.Distance == currentFurthestDistance)
+                    {
                         reindeer.Points++;
+
+                    }
                 }
             }
 
-            Console.WriteLine(Reindeers.Max(a => a.Points));
-            Console.WriteLine(counter);
+            Console.WriteLine(Reindeers.Max(a=>a.Points));
+
         }
     }
 
@@ -136,8 +132,7 @@
 
         public readonly int RestTime;
 
-        //Every amount of seconds that reindeer should move on
-        public readonly int StartMovingOn;
+        public int RestTimeLeft { get; set; }
 
         public int Distance { get; set; }
 
@@ -152,8 +147,8 @@
             KilometersPerSecond = kilometersPerSecond;
             MovingTime = movingTime;
             RestTime = restTime;
-            StartMovingOn = MovingTime + RestTime + 1;
             MovingTimeLeft = MovingTime;
+            RestTimeLeft = restTime;
         }
     }
 }
