@@ -4,17 +4,17 @@
     {
         static void Main(string[] args)
         {
-            var findDistance = new FindWinningReindeerDistance();
+            var findDistance = new RaceSimulator();
             findDistance.ProcessInput();
-            findDistance.FindFurthestDistancePartTwo();
+            findDistance.SimulateRacePartTwo();
         }
     }
 
-    public class FindWinningReindeerDistance
+    public class RaceSimulator
     {
-        public List<Reindeer> Reindeers { get; }
+        private readonly List<Reindeer> Reindeers;
 
-        public FindWinningReindeerDistance()
+        public RaceSimulator()
         {
             Reindeers = new List<Reindeer>();
         }
@@ -71,56 +71,36 @@
         //}
 
         //Second Part
-        public void FindFurthestDistancePartTwo()
+        public void SimulateRacePartTwo()
         {
             for (int seconds = 1; seconds <= 2503; seconds++)
             {
-                var currentFurthestDistance = 0;
-
-                foreach (var reindeer in Reindeers)
-                {
-                    if (!reindeer.IsResting)
-                    {
-                        reindeer.Distance += reindeer.KilometersPerSecond;
-                        reindeer.MovingTimeLeft--;
-
-                        // Check if we need to transition to resting
-                        if (reindeer.MovingTimeLeft == 0)
-                        {
-                            reindeer.IsResting = true;
-                            reindeer.MovingTimeLeft = reindeer.MovingTime;
-                        }
-                    }
-
-                    else
-                    {
-                        reindeer.RestTimeLeft--;
-
-                        // Check if we need to transition to moving
-                        if (reindeer.RestTimeLeft == 0)
-                        {
-                            reindeer.IsResting = false;
-                            reindeer.RestTimeLeft = reindeer.RestTime;
-                        }
-
-                    }
-
-                    if (reindeer.Distance > currentFurthestDistance)
-                        currentFurthestDistance = reindeer.Distance;
-                }
-
-                foreach (var reindeer in Reindeers)
-                {
-                    if (reindeer.Distance == currentFurthestDistance)
-                    {
-                        reindeer.Points++;
-
-                    }
-                }
+                UpdatePositions();
+                AwardPoints();
             }
 
-            Console.WriteLine(Reindeers.Max(a=>a.Points));
+            Console.WriteLine(Reindeers.Max(a => a.Points));
+        }
 
+        private void UpdatePositions()
+        {
+            foreach (var reindeer in Reindeers)
+            {
+                reindeer.UpdateState();
+            }
+        }
+
+        private void AwardPoints()
+        {
+            var maxDistance = Reindeers.Max(reindeer => reindeer.Distance);
+
+            foreach (var reindeer in Reindeers.Where(reindeer => reindeer.Distance == maxDistance))
+            {
+                if (reindeer.Distance == maxDistance)
+                {
+                    reindeer.Points++;
+                }
+            }
         }
     }
 
@@ -132,15 +112,15 @@
 
         public readonly int RestTime;
 
-        public int RestTimeLeft { get; set; }
+        public int RestTimeLeft { get; private set; }
 
-        public int Distance { get; set; }
+        public int Distance { get; private set; }
 
         public int Points { get; set; }
 
-        public bool IsResting { get; set; }
+        public bool IsResting { get; private set; }
 
-        public int MovingTimeLeft { get; set; }
+        public int MovingTimeLeft { get; private set; }
 
         public Reindeer(int kilometersPerSecond, int movingTime, int restTime)
         {
@@ -149,6 +129,36 @@
             RestTime = restTime;
             MovingTimeLeft = MovingTime;
             RestTimeLeft = restTime;
+            IsResting = false;
+        }
+
+        public void UpdateState()
+        {
+            if (!IsResting)
+            {
+                Distance += KilometersPerSecond;
+                MovingTimeLeft--;
+
+                // Check if we need to transition to resting
+                if (MovingTimeLeft == 0)
+                {
+                    IsResting = true;
+                    MovingTimeLeft = MovingTime;
+                }
+            }
+
+            else
+            {
+                RestTimeLeft--;
+
+                // Check if we need to transition to moving
+                if (RestTimeLeft == 0)
+                {
+                    IsResting = false;
+                    RestTimeLeft = RestTime;
+                }
+
+            }
         }
     }
 }
