@@ -7,7 +7,6 @@ namespace FindRightBalanceOfIngredients
         public static void Main(string[] args)
         {
             var ingredients = new BalancedIngredients();
-            int resultSum = 100;
             int numbers = 4;
             var partition = new int[numbers];
 
@@ -45,39 +44,6 @@ namespace FindRightBalanceOfIngredients
             Ingredients = new List<int[]>();
         }
 
-        //Generates all sequences which have a sum of 100
-        //public void GeneratePartitions()
-        //{
-        //    for (int firstCoefficient = 1; firstCoefficient <= 99; firstCoefficient++)
-        //    {
-        //        for (int secondCoefficient = 1; secondCoefficient <= 99; secondCoefficient++)
-        //        {
-        //            for (int thirdCoefficient = 1; thirdCoefficient <= 99; thirdCoefficient++)
-        //            {
-        //                for (int fourthCoefficient = 1; fourthCoefficient <= 99; fourthCoefficient++)
-        //                {
-        //                    if ((firstCoefficient + secondCoefficient + thirdCoefficient + fourthCoefficient) == 100)
-        //                    {
-        //                        
-
-        //                }
-        //            }
-        //        }
-        //    }
-        //}
-
-        //private int CalculateScoreOfIngredient(int[] ingredientProperties, int coefficient)
-        //{
-        //    var tempScore = 0;
-
-        //    foreach (int property in ingredientProperties)
-        //    {
-        //        tempScore += coefficient * property;
-        //    }
-
-        //    return tempScore;
-        //}
-
         public void ReadInput()
         {
             var path = @"D:\Projects\AdventOfCode\2015\FindRightBalanceOfIngredients\Input.txt";
@@ -107,17 +73,6 @@ namespace FindRightBalanceOfIngredients
         //Generates all sequences which have a sum of 100
         public void GeneratePartitions(int[] partition)
         {
-            //if (partition[partition.Length - 1] == 1)
-            //{
-            //    foreach (int i in partition)
-            //    {
-            //        Console.Write($"{i} ");
-            //    }
-
-            //    Console.WriteLine();
-            //    return;
-            //}
-
             if (partition.Last() == 1)
             {
                 CalculateCookieScore(partition);
@@ -125,81 +80,46 @@ namespace FindRightBalanceOfIngredients
                 return;
             }
 
-            if (CheckIfNumbersAreEqual(partition) && CheckTwoCollectionsForEquality(partition))
+            if (CheckIfNumbersAreEqual(partition) && !CheckTwoCollectionsForEquality(partition))
             {
                 CalculateCookieScore(partition);
                 GeneratedSequences.Add(partition);
-                //int[] partitionCopy = new int[partition.Length];
-                //Array.Copy(partition, partitionCopy, partition.Length);
-                //partitionCopy[partitionCopy.Length - 1]--;
-                //partitionCopy[partitionCopy.Length - 2]++;
+
                 var partitionCopy = CopyAndAlterArray(partition, 0);
                 GeneratePartitions(partitionCopy);
             }
 
-            else if (CheckTwoCollectionsForEquality(partition))
+            else if (!CheckTwoCollectionsForEquality(partition))
             {
                 CalculateCookieScore(partition);
                 GeneratedSequences.Add(partition);
-                if (partition.Last() == 2)
-                {
-                    int b = 0;
-                }
 
                 for (int i = 0; i < partition.Length - 1; i++)
                 {
                     var partitionCopy = CopyAndAlterArray(partition, i);
-                    
-                    if (CheckTwoCollectionsForEquality(partitionCopy))
+
+                    if (!CheckTwoCollectionsForEquality(partitionCopy))
                     {
                         GeneratePartitions(partitionCopy);
                         GeneratePermutations(partitionCopy, partitionCopy.Length);
 
                         foreach (var currentPartition in CurrentPermutations)
                         {
-                            if (CheckTwoCollectionsForEquality(currentPartition))
+                            if (!CheckTwoCollectionsForEquality(currentPartition))
                                 GeneratePartitions(currentPartition);
                         }
                     }
-                    
-
-                    //CurrentPermutations.Clear();
                 }
-
-
-
-
-
-                //foreach (int[] permutation in CurrentPermutations)
-                //{
-
-                //}
-
-                //var changedPartition = partition;
-                //var lastNumber = changedPartition.Last();
-                //changedPartition[changedPartition.Length - 1] = lastNumber - 1;
-
-
-                //GeneratePartitions(changedPartition);
-                //var changed = partition;
-                //changed[changed.Length - 1]--;
-                //GeneratePartitions(changed);
-
-
             }
-
-
-
-
         }
 
         private void GeneratePermutations(int[] numbers, int size)
         {
             if (size == 1)
             {
-                if (CheckTwoCollectionsForEquality(numbers))
+                if (!CheckTwoCollectionsForEquality(numbers))
                     CurrentPermutations.Add(numbers);
-                
+
                 return;
             }
 
@@ -251,10 +171,14 @@ namespace FindRightBalanceOfIngredients
                 texture += (teaspoonsForEachIngredient[i] * Ingredients[i][3]);
             }
 
-            capacity = SetPropertyToZeroIfNegative(capacity);
-            durability = SetPropertyToZeroIfNegative(durability);
-            flavor = SetPropertyToZeroIfNegative(flavor);
-            texture = SetPropertyToZeroIfNegative(texture);
+            //capacity = SetPropertyToZeroIfNegative(capacity);
+            //durability = SetPropertyToZeroIfNegative(durability);
+            //flavor = SetPropertyToZeroIfNegative(flavor);
+            //texture = SetPropertyToZeroIfNegative(texture);
+            if (capacity == 0 || durability == 0 || flavor == 0 || texture == 0)
+            {
+                return;
+            }
 
             tempScore = capacity * durability * flavor * texture;
 
@@ -269,7 +193,28 @@ namespace FindRightBalanceOfIngredients
 
         private bool CheckTwoCollectionsForEquality(int[] numbers)
         {
-            return !GeneratedSequences.Any(partition => partition.Intersect(numbers).Count() == numbers.Length);   
+            bool areEqual = false;
+
+            if (GeneratedSequences.Count != 0)
+            {
+                foreach (int[] sequence in GeneratedSequences)
+                {
+                    areEqual = true;
+                    for (int i = 0; i < sequence.Length; i++)
+                    {
+                        if (numbers[i] != sequence[i])
+                        {
+                            areEqual = false;
+                        }
+                    }
+
+                    if (areEqual)
+                        break;
+                }
+            }
+
+            return areEqual;
+            //return !GeneratedSequences.Any(partition => partition.Intersect(numbers).Count() == numbers.Length);   
         }
 
         private int[] CopyAndAlterArray(int[] partition, int i)
@@ -281,5 +226,6 @@ namespace FindRightBalanceOfIngredients
 
             return partitionCopy;
         }
+
     }
 }
