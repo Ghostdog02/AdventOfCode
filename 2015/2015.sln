@@ -29,7 +29,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OptimalSeatingArrangement",
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FindTheFastestReindeer", "FindTheFastestReindeer\FindTheFastestReindeer.csproj", "{FEE825E8-D5FC-4049-BDA2-BF20A4DFE04C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FindRightBalanceOfIngredients", "FindRightBalanceOfIngredients\FindRightBalanceOfIngredients.csproj", "{F08E8E63-FCFF-4E80-B3CE-D3C67985C333}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FindRightBalanceOfIngredients", "FindRightBalanceOfIngredients\FindRightBalanceOfIngredients.csproj", "{F08E8E63-FCFF-4E80-B3CE-D3C67985C333}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FindAuntSue", "FindAuntSue\FindAuntSue.csproj", "{C812C214-3FC0-401E-8964-539E336B0044}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -93,6 +95,10 @@ Global
 		{F08E8E63-FCFF-4E80-B3CE-D3C67985C333}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F08E8E63-FCFF-4E80-B3CE-D3C67985C333}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F08E8E63-FCFF-4E80-B3CE-D3C67985C333}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C812C214-3FC0-401E-8964-539E336B0044}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C812C214-3FC0-401E-8964-539E336B0044}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C812C214-3FC0-401E-8964-539E336B0044}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C812C214-3FC0-401E-8964-539E336B0044}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
